@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Report</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
+</head>
+<body>
+    <h1>Hello, Welcome to HFMS Report Generator</h1>
+
+    <!-- Report Form -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Generate</button>
+    </form>
+
+    <!-- Report Data Table -->
+    {% if data %}
+        <h2>Report Results</h2>
+        <table>
+            <thead>
+                <tr>
+                    {% for header in column_headers %}
+                        <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No data available. Please select fields and specify a date range to generate a report.</p>
+    {% endif %}
+</body>
+</html>
