@@ -1,45 +1,49 @@
 from django.shortcuts import render
 from django.db import connection
 from .forms import ReportForm
+import pytz
 
 def report_view(request):
     form = ReportForm(request.POST or None)
-    data = None
-    column_headers = None  # To store column headers for table display
-
-    # Dictionary to map form field choices to SQL expressions
-    field_map = {
-        'NAME': "UPPER(s.Last_name + ' ' + s.First_Name) AS \"NAME\"",
-        'BRANCH CODE': "b.branch_code AS \"BRANCH CODE\"",
-        'SCHOOL': "sc.School_name AS \"SCHOOL\"",
-        'PROGRAMME': "p.Programme_name AS \"PROGRAMME\"",
-        'YOS': "r.Year_of_programme AS \"YOS\"",
-        'MALE COUNT': "SUM(CASE WHEN s.Sex = 'M' THEN 1 ELSE 0 END) AS \"MALE COUNT\"",
-        'FEMALE COUNT': "SUM(CASE WHEN s.Sex = 'F' THEN 1 ELSE 0 END) AS \"FEMALE COUNT\"",
-        'AVERAGE PERCENT': "AVG(r.sponsor_rate * 100) AS \"AVERAGE PERCENT\""
-    }
+    data = []
+    column_headers = []  # Initialize as an empty list
 
     if form.is_valid():
-        fields = form.cleaned_data['fields']
-        start_date = form.cleaned_data['start_date']
-        end_date = form.cleaned_data['end_date']
-    
-        # Map selected fields to their SQL expressions
-        selected_fields = [field_map[field] for field in fields]
-        sql_selected_fields = ", ".join(selected_fields)
-    
-       
-        group_by_fields = [field for field in fields if field not in ('MALE COUNT', 'FEMALE COUNT', 'AVERAGE PERCENT')]
-    
+        # Get cleaned data
+        local_tz = pytz.timezone('Africa/Lusaka')
+        start_date = form.cleaned_data['start_date'].strftime('%Y-%m-%d 00:00:00.000')  # Adjusting for the specified format
+        end_date = form.cleaned_data['end_date'].strftime('%Y-%m-%d 23:59:59.999')    # Adjusting for the specified format
+
+        # Fetch the fields selected in the form
+        selected_fields = form.cleaned_data['fields']
+        print(form.cleaned_data)
+        # Build the SQL SELECT statement dynamically based on selected fields
+        field_map = {
+            'SID': "s.Student_number AS \"SID\"",
+            'LOAN NUMBER': "s.Loan_number AS \"LOAN NUMBER\"",
+            'BRANCH CODE': "b.branch_code AS \"BRANCH CODE\"",
+            'ACCOUNT NUMBER': "s.Bank_account AS \"ACCOUNT NUMBER\"",
+            'NAME': "UPPER(s.Last_name + ' ' + s.First_Name) AS \"NAME\"",
+            'NRC': "s.NRC AS \"NRC\"",
+            'GENDER': "s.Sex AS \"GENDER\"",
+            'YOS': "r.Year_of_programme AS \"YOS\"",
+            'SCHOOL CODE': "sc.School_code AS \"SCHOOL CODE\"",
+            'SCHOOL NAME': "sc.School_name AS \"SCHOOL\"",
+            'PROGRAMME': "p.Programme_name AS \"PROGRAMME\"",
+            'REG DATE': "r.Registration_date AS \"REG DATE\"",
+            'PERCENT': "r.sponsor_rate * 100 AS \"PERCENT\"",
+            'CELL': "s.Cell AS \"CELL\"",
+            'INSTITUTION NAME': "i.Institution_name AS \"INSTITUTION NAME\"",
+        }
         
-        if 'YOS' not in group_by_fields:
-            group_by_fields.append('YOS')  
-
-        sql_group_by_fields = ", ".join([field_map[field].split(" AS ")[0] for field in group_by_fields])
-
+        # Map selected fields to their SQL expressions
+        sql_selected_fields = [field_map[field] for field in selected_fields]
+        # search = input()
+        # or s.nrc = search
+        # Construct the SQL query
         query = f"""
-        SELECT  
-            {sql_selected_fields}
+        SELECT 
+            {', '.join(sql_selected_fields)}
         FROM 
             STUDENT s
         LEFT JOIN 
@@ -55,20 +59,19 @@ def report_view(request):
         WHERE 
             r.Institution_code = 1
             AND r.Registration_date BETWEEN '{start_date}' AND '{end_date}'
-        GROUP BY 
-            {sql_group_by_fields}
+            
         ORDER BY 
-            r.Year_of_programme;
+            r.Registration_date;
         """
 
-
-
-        # fetch data
+        # Fetch data from the database
         with connection.cursor() as cursor:
             cursor.execute(query)
             column_headers = [desc[0] for desc in cursor.description]
             data = cursor.fetchall()
-
+        
+        print(data)  # This will show the fetched data in the console for debugging
+        print(f"Fetched {len(data)} records.")
     return render(request, 'report.html', {
         'form': form,
         'data': data,

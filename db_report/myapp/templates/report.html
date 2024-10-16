@@ -1,25 +1,60 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+</head>
+<body>
+    <h1>Report Generation</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Generate Report</button>
+    </form>
+
+    {% if data %}
+        <h2>Report Results</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for header in column_headers %}
+                        <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                    <tr>
+                        {% for item in row %}
+                            <td>{{ item }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Report</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
+    <title>Report Dashboard</title>
 </head>
 <body>
-    <h1>Hello, Welcome to HFMS Report Generator</h1>
-
-    <!-- Report Form -->
+    <h1>Report Dashboard</h1>
+    
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Generate</button>
+        {{ form.as_p }}  <!-- Render the form -->
+        <button type="submit">Generate Report</button>
     </form>
 
-    <!-- Report Data Table -->
     {% if data %}
-        <h2>Report Results</h2>
+        <h2>Fetched Data</h2>
         <table>
             <thead>
                 <tr>
@@ -31,15 +66,16 @@
             <tbody>
                 {% for row in data %}
                     <tr>
-                        {% for cell in row %}
-                            <td>{{ cell }}</td>
+                        {% for item in row %}
+                            <td>{{ item }}</td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+        
     {% else %}
-        <p>No data available. Please select fields and specify a date range to generate a report.</p>
+        <p>No data available. Please generate a report.</p>
     {% endif %}
 </body>
 </html>
