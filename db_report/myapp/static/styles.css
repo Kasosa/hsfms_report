@@ -25,7 +25,18 @@ form {
 
 .field-selection {
     margin-bottom: 10px;
-    text-align: left;
+    text-align: left; /* Changed from align: left to text-align: left */
+}
+
+.field-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create 3 equal columns */
+    gap: 10px; /* Space between columns */
+}
+
+.field-checkbox {
+    display: flex;
+    align-items: center;
 }
 
 button {
@@ -55,5 +66,5 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2ce;
 }

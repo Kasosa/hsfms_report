@@ -1,3 +1,5 @@
+import csv
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.db import connection
 from .forms import ReportForm
@@ -13,6 +15,8 @@ def report_view(request):
         local_tz = pytz.timezone('Africa/Lusaka')
         start_date = form.cleaned_data['start_date'].strftime('%Y-%m-%d 00:00:00.000')  # Adjusting for the specified format
         end_date = form.cleaned_data['end_date'].strftime('%Y-%m-%d 23:59:59.999')    # Adjusting for the specified format
+        institution_code = form.cleaned_data['institution_code']
+        nrc = form.cleaned_data.get('nrc')
 
         # Fetch the fields selected in the form
         selected_fields = form.cleaned_data['fields']
@@ -57,18 +61,29 @@ def report_view(request):
         LEFT JOIN 
             bank_branch b ON b.branch_code = s.branch_code
         WHERE 
-            r.Institution_code = 1
-            AND r.Registration_date BETWEEN '{start_date}' AND '{end_date}'
-            
-        ORDER BY 
-            r.Registration_date;
+            r.Institution_code = {institution_code}
+            AND r.Registration_date BETWEEN '{start_date}' AND '{end_date}'   
         """
-
+        # Add NRC filter if provided
+        if nrc:
+            query += f" AND s.NRC = '{nrc}'"
         # Fetch data from the database
         with connection.cursor() as cursor:
             cursor.execute(query)
             column_headers = [desc[0] for desc in cursor.description]
             data = cursor.fetchall()
+        
+        # Check if download as CSV is requested
+        if 'download_csv' in request.POST:
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="report.csv"'
+
+            writer = csv.writer(response)
+            writer.writerow(column_headers)  # Write header row
+            for row in data:
+                writer.writerow(row)
+
+            return response
         
         print(data)  # This will show the fetched data in the console for debugging
         print(f"Fetched {len(data)} records.")

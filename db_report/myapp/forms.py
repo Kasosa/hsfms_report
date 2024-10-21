@@ -27,16 +27,50 @@ class ReportForm(forms.Form):
         label="Select Data Fields"
     )
     
-    start_date = forms.DateTimeField(
+
+    start_date = forms.DateField(
         required=True,
-        input_formats=['%Y-%m-%d %H:%M:%S.%f'],
-        widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD HH:MM:SS.sss'}),
+        widget=forms.DateInput(attrs={'type': 'date'}),
         label="Start Date"
     )
     
-    end_date = forms.DateTimeField(
+    end_date = forms.DateField(
         required=True,
-        input_formats=['%Y-%m-%d %H:%M:%S.%f'],
-        widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD HH:MM:SS.sss'}),
+        widget=forms.DateInput(attrs={'type': 'date'}),
         label="End Date"
     )
+    #start_date = forms.DateTimeField(
+    #    required=True,
+    #    input_formats=['%Y-%m-%d %H:%M:%S.%f'],
+    #    widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD HH:MM:SS.sss'}),
+    #    label="Start Date"
+    #)
+    
+    #end_date = forms.DateTimeField(
+    #    required=True,
+    #    input_formats=['%Y-%m-%d %H:%M:%S.%f'],
+    #    widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD HH:MM:SS.sss'}),
+    #    label="End Date"
+    #)
+
+    # New institution code field
+    #institution_code = forms.ChoiceField(
+    #    choices=[(str(i), f"{i}") for i in range(7)],  # Range 0 to 6
+    #    required=True,
+    #    label="Select Institution Code"
+    #)
+    institution_code = forms.ChoiceField(
+        choices=[
+            ('0', 'UNZA'),
+            ('1', 'CBU'),
+            ('2', 'KMU'),
+            ('3', 'MKU'),
+            ('4', 'MUL'),
+            ('5', 'CHAU'),
+            ('6', 'KNU')
+        ],
+        required=True,
+        label="Select Institution"
+    )
+
+    nrc = forms.CharField(required=False, label="Search by NRC")

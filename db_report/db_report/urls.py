@@ -23,3 +23,4 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/myapp/', permanent=True)),  # Redirect to myapp
     path('myapp/', include('myapp.urls')),
 ]
+    
