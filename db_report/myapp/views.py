@@ -16,6 +16,7 @@ def report_view(request):
         start_date = form.cleaned_data['start_date'].strftime('%Y-%m-%d 00:00:00.000')  # Adjusting for the specified format
         end_date = form.cleaned_data['end_date'].strftime('%Y-%m-%d 23:59:59.999')    # Adjusting for the specified format
         institution_code = form.cleaned_data['institution_code']
+        database = form.cleaned_data['database_instance']
         nrc = form.cleaned_data.get('nrc')
 
         # Fetch the fields selected in the form
@@ -85,7 +86,7 @@ def report_view(request):
 
             return response
         
-        print(data)  # This will show the fetched data in the console for debugging
+        #print(data)  # This will show the fetched data in the console for debugging
         print(f"Fetched {len(data)} records.")
     return render(request, 'report.html', {
         'form': form,

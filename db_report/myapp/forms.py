@@ -73,4 +73,9 @@ class ReportForm(forms.Form):
         label="Select Institution"
     )
 
+    database_instance = forms.ChoiceField(
+        choices=[('default', 'UNZA'), ('CBU', 'CBU'), ('KMU', 'KMU'), ('MKU', 'MKU'), ('MUL', 'MUL'), ('CHAU', 'CHAU'), ('KNU', 'KNU')],
+        label="Select Database Instance"
+    )
+
     nrc = forms.CharField(required=False, label="Search by NRC")
