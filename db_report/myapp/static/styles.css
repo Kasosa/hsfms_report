@@ -9,36 +9,72 @@ body {
     text-align: center;
 }
 
-h1 {
-    margin-bottom: 20px;
+.logo-container {
+    display: flex;
+    align-items: center; /* Center text vertically with the logo */
+}
+
+.logo {
+    width: 200px; /* Adjust width as needed */
+    height: 90px; /* Adjust height as needed */
+    margin-right: 15px; /* Space between logo and text */
+}
+
+.welcome-text {
+    font-size: 32px; /* Adjust font size as needed */
+    text-align: left; /* Align text to the left */
 }
 
 form {
-    display: inline-block;
+    display: inline-flexbox;
     padding: 20px;
     border: 1px solid #cccccc0e;
     border-radius: 8px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    text-align: left; /* Align form content to the left */
+    text-align: center; /* Align form content to the center*/
+}
+
+.horizontal-checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between each checkbox and label pair */
+    align-items: center;
+}
+
+.horizontal-checkbox-container label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 16px; /* Adjust text size as needed */
+}
+
+.horizontal-checkbox-container input[type="checkbox"] {
+    margin-right: 5px; /* Space between checkbox and label text */
 }
 
 .field-selection {
-    margin-bottom: 10px;
-    text-align: left; /* Align selection labels to the left */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;  
 }
 
 .field-options {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 50px;
+    gap: 10px;
 }
 
 .field-checkbox {
-    display: flex;
-    align-items: center;
-    justify-content: left; /* Align checkboxes and labels to the left */
+    flex: 1;
+    display: inline-flex;
+    min-width: 150px;
+    padding: 10px;
+    border: 1px solid white;
+    text-align: left;
+    align-items:center;
+    justify-content: center; /* Align checkboxes and labels to the left */
 }
 
 button {
@@ -47,7 +83,7 @@ button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 1px;
     cursor: pointer;
     align-self: flex-start; /* Align button to the left */
 }

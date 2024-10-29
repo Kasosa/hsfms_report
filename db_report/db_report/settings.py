@@ -84,7 +84,79 @@ DATABASES = {
         },
         'USER': '',  # Leave this blank for Windows Authentication
         'PASSWORD': '',  # Leave this blank for Windows Authentication
-    }
+    },
+
+    'CBU': {
+        'ENGINE': 'mssql',
+        'NAME': 'SFMSDB',
+        'HOST': 'HELSB-OPS-21',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',
+        },
+        'USER': '',  # Leave this blank for Windows Authentication
+        'PASSWORD': ''
+    },
+
+    'KMU': {
+        'ENGINE': 'mssql',
+        'NAME': 'SFMSDB',
+        'HOST': 'HELSB-OPS-21',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',
+        },
+        'USER': '',  # Leave this blank for Windows Authentication
+        'PASSWORD': ''
+    },
+
+    'MKU': {
+        'ENGINE': 'mssql',
+        'NAME': 'SFMSDB',
+        'HOST': 'HELSB-OPS-21',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',
+        },
+        'USER': '',  # Leave this blank for Windows Authentication
+        'PASSWORD': ''
+    },
+
+    'MUL': {
+        'ENGINE': 'mssql',
+        'NAME': 'SFMSDB',
+        'HOST': 'HELSB-OPS-21',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',
+        },
+        'USER': '',  # Leave this blank for Windows Authentication
+        'PASSWORD': ''
+    },
+
+    'CHAU': {
+        'ENGINE': 'mssql',
+        'NAME': 'SFMSDB',
+        'HOST': 'HELSB-OPS-21',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',
+        },
+        'USER': '',  # Leave this blank for Windows Authentication
+        'PASSWORD': ''
+    },
+
+    'KNU': {
+        'ENGINE': 'mssql',
+        'NAME': 'SFMSDB',
+        'HOST': 'HELSB-OPS-21',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'trusted_connection': 'yes',
+        },
+        'USER': '',  # Leave this blank for Windows Authentication
+        'PASSWORD': ''
+    },
 }
 
 # Password validation

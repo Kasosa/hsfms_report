@@ -17,6 +17,7 @@ def report_view(request):
         end_date = form.cleaned_data['end_date'].strftime('%Y-%m-%d 23:59:59.999')    # Adjusting for the specified format
         institution_code = form.cleaned_data['institution_code']
         database = form.cleaned_data['database_instance']
+        yos = form.cleaned_data['YOS']
         nrc = form.cleaned_data.get('nrc')
 
         # Fetch the fields selected in the form
@@ -43,9 +44,7 @@ def report_view(request):
         
         # Map selected fields to their SQL expressions
         sql_selected_fields = [field_map[field] for field in selected_fields]
-        # search = input()
-        # or s.nrc = search
-        # Construct the SQL query
+        
         query = f"""
         SELECT 
             {', '.join(sql_selected_fields)}
@@ -66,6 +65,9 @@ def report_view(request):
             AND r.Registration_date BETWEEN '{start_date}' AND '{end_date}'   
         """
         # Add NRC filter if provided
+        if yos:  # Use year_of_study instead of YOS
+            query += f" AND r.Year_of_programme = '{yos}'"
+
         if nrc:
             query += f" AND s.NRC = '{nrc}'"
         # Fetch data from the database

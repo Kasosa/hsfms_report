@@ -22,12 +22,13 @@ class ReportForm(forms.Form):
 
     fields = forms.MultipleChoiceField(
         choices=FIELD_CHOICES,
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple
+            (attrs={
+            'class': 'horizontal-checkbox-container'  # Using a class for custom vertical styling
+        }),
         required=True,
         label="Select Data Fields"
     )
-    
-
     start_date = forms.DateField(
         required=True,
         widget=forms.DateInput(attrs={'type': 'date'}),
@@ -39,26 +40,6 @@ class ReportForm(forms.Form):
         widget=forms.DateInput(attrs={'type': 'date'}),
         label="End Date"
     )
-    #start_date = forms.DateTimeField(
-    #    required=True,
-    #    input_formats=['%Y-%m-%d %H:%M:%S.%f'],
-    #    widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD HH:MM:SS.sss'}),
-    #    label="Start Date"
-    #)
-    
-    #end_date = forms.DateTimeField(
-    #    required=True,
-    #    input_formats=['%Y-%m-%d %H:%M:%S.%f'],
-    #    widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD HH:MM:SS.sss'}),
-    #    label="End Date"
-    #)
-
-    # New institution code field
-    #institution_code = forms.ChoiceField(
-    #    choices=[(str(i), f"{i}") for i in range(7)],  # Range 0 to 6
-    #    required=True,
-    #    label="Select Institution Code"
-    #)
     institution_code = forms.ChoiceField(
         choices=[
             ('0', 'UNZA'),
@@ -76,6 +57,10 @@ class ReportForm(forms.Form):
     database_instance = forms.ChoiceField(
         choices=[('default', 'UNZA'), ('CBU', 'CBU'), ('KMU', 'KMU'), ('MKU', 'MKU'), ('MUL', 'MUL'), ('CHAU', 'CHAU'), ('KNU', 'KNU')],
         label="Select Database Instance"
+    )
+
+    YOS= forms.CharField(required=False,
+        label='Year of Study'
     )
 
     nrc = forms.CharField(required=False, label="Search by NRC")
