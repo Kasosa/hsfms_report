@@ -4,20 +4,20 @@ class ReportForm(forms.Form):
     # Choices for the fields to select in the report
     FIELD_CHOICES = [
         ('SID', 'Student Number (SID)'),
-        ('LOAN NUMBER', 'Loan Number'),
+        ('NRC', 'NRC'),
+        ('NAME', 'Name'),
+        ('GENDER', 'Gender'),
+        ('CELL', 'Cell Number'),
         ('BRANCH CODE', 'Branch Code'),
         ('ACCOUNT NUMBER', 'Account Number'),
-        ('NAME', 'Name'),
-        ('NRC', 'NRC'),
-        ('GENDER', 'Gender'),
+        ('LOAN NUMBER', 'Loan Number'),        
         ('YOS', 'Year of Study (YOS)'),
         ('SCHOOL CODE', 'School Code'),
         ('SCHOOL NAME', 'School Name'),
         ('PROGRAMME', 'Programme'),
-        ('REG DATE', 'Registration Date'),
-        ('PERCENT', 'Sponsor Rate Percent'),
-        ('CELL', 'Cell Number'),
         ('INSTITUTION NAME', 'Institution Name'),
+        ('REG DATE', 'Registration Date'),
+        ('PERCENT', 'Sponsor Rate Percent'),      
     ]
 
     fields = forms.MultipleChoiceField(
