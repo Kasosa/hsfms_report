@@ -29,17 +29,7 @@ class ReportForm(forms.Form):
         required=True,
         label="Select Data Fields"
     )
-    start_date = forms.DateField(
-        required=True,
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        label="Start Date"
-    )
-    
-    end_date = forms.DateField(
-        required=True,
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        label="End Date"
-    )
+
     institution_code = forms.ChoiceField(
         choices=[
             ('0', 'UNZA'),
@@ -59,7 +49,28 @@ class ReportForm(forms.Form):
         label="Select Database Instance"
     )
 
-    YOS= forms.CharField(required=False,
+    start_date = forms.DateField(
+        required=True,
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label="Start Date"
+    )
+    
+    end_date = forms.DateField(
+        required=True,
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label="End Date"
+    )
+
+    YOS= forms.ChoiceField(
+        choices=[
+            ('', 'select yos'),
+            ('1', '1'),
+            ('2', '2'),
+            ('3', '3'),
+            ('4', '4'),
+            ('5', '5'),
+        ],
+        required=False,
         label='Year of Study'
     )
 

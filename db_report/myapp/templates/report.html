@@ -7,14 +7,18 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'site.webmanifest' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    
+    <!-- Include Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=2.0, user-scalable=yes">
+    <title>DataBridge</title>
 </head>
 <body>
     <h1 class="header">
         <div class="logo-container">
-            <img src="{% static 'helsb.jpg' %}" alt="HELSB Logo" class="logo">
+            <img src="{% static 'HELSB_LOGO-01.png' %}" alt="HELSB Logo" class="logo">
             <span class="welcome-text">Welcome to the HFMS Report Dashboard!</span>
         </div>
     </h1>
@@ -22,13 +26,35 @@
     <form method="post">
         {% csrf_token %}
         <div class="field-selection">
-            <div class="field-options">
-                {% for field in form %}
-                    <div class="field-checkbox">
-                        {{ field.label_tag }}
-                        {{ field }}
-                    </div>
-                {% endfor %}
+            <div class="form-field fields">
+                {{ form.fields.label_tag }}  <!-- Render label for fields -->
+                {{ form.fields }}  <!-- Render the dropdown multiselect for fields -->
+            </div>
+            <div class="form-field institution-code">
+                {{ form.institution_code.label_tag }}
+                {{ form.institution_code }}
+            </div>
+            <div class="form-field database-instance">
+                {{ form.database_instance.label_tag }}
+                {{ form.database_instance }}
+            </div>
+            <div class="form-field start-date">
+                {{ form.start_date.label_tag }}
+                {{ form.start_date }}
+            </div>
+            <div class="form-field end-date">
+                {{ form.end_date.label_tag }}
+                {{ form.end_date }}
+            </div>
+            
+            
+            <div class="form-field yos">
+                {{ form.YOS.label_tag }}
+                {{ form.YOS }}
+            </div>
+            <div class="form-field nrc">
+                {{ form.nrc.label_tag }}
+                {{ form.nrc }}
             </div>
         </div>
         <button type="submit">Generate Report</button>
@@ -58,5 +84,18 @@
     {% else %}
         <p>No data available. Please generate a report.</p>
     {% endif %}
+
+    <!--Include jQuery and Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('.multi-select').select2({
+                placeholder: "Select Data Fields",  // Placeholder text
+                allowClear: true                     // Allow clearing selection
+            });
+        });
+    </script>
 </body>
 </html>
