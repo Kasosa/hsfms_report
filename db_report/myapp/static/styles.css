@@ -22,12 +22,12 @@ body {
     margin-right: 15px;
 }
 
-.welcome-text {
+/*.welcome-text {
     font-size: 32px;
     text-align: left;
-    color: #4360c0;
+    color: #1d2951;
 }
-
+*/
 /* Form Container */
 form {
     display: flex;
